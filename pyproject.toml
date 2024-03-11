@@ -9,6 +9,9 @@ pyqt6 = "^6.6.1"
 black = "^24.2.0"
 pre-commit = "^3.6.2"
 
+[tool.poetry.group.types.dependencies]
+mypy = "^1.9.0"
+
 [tool.poetry.group.risdk.dependencies]
 ri-sdk = "^1.0.0"
 
