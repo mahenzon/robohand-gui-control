@@ -4,6 +4,7 @@ from PyQt6.QtCore import Qt, QTimer, pyqtSignal
 from PyQt6.QtWidgets import QSlider
 
 from app.common.signals import connect_handler_to_signal
+from app.styles.slider import SLIDER_STYLESHEET_BIG_HANDLE
 
 
 class DebouncedSlider(QSlider):  # type: ignore[misc]
@@ -31,6 +32,8 @@ class DebouncedSlider(QSlider):  # type: ignore[misc]
         self.setMinimum(slider_minimum)
         self.setMaximum(slider_maximum)
         connect_handler_to_signal(self.valueChanged, self.slider_changed)
+
+        self.setStyleSheet(SLIDER_STYLESHEET_BIG_HANDLE)
 
     def debounced_call(self) -> None:
         # noinspection PyUnresolvedReferences
