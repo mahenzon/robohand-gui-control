@@ -1,4 +1,4 @@
-from typing import Callable, TypeVar, Union
+from typing import Callable, TypeVar, Union, cast
 
 from PyQt6.QtCore import pyqtBoundSignal, pyqtSignal
 
@@ -18,8 +18,5 @@ def connect_handler_to_signal(
     :param handler:
     :return:
     """
-    if isinstance(signal, pyqtBoundSignal):
-        signal.connect(handler)
-
-    msg = f"Signal must be of type `pyqtBoundSignal`, got {type(signal)}"
-    raise TypeError(msg)
+    sig = cast(pyqtBoundSignal, signal)
+    sig.connect(handler)
