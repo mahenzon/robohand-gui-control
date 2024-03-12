@@ -6,6 +6,12 @@ log = logging.getLogger(__name__)
 
 
 class LoggedRobohandControl(RobohandControlBase):
+    def __init__(self) -> None:
+        log.warning(
+            "Starting in logged mode. To run in ri-sdk mode use `--ri-sdk-mode` flag "
+            "and to start in adafruit servokit mode use `--adafruit-servokit-mode` flag",
+        )
+
     def control_claw(self, angle: int) -> None:
         log.info("Set claw angle to %s", angle)
 
