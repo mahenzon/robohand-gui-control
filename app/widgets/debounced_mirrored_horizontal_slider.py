@@ -25,7 +25,7 @@ class DebouncedMirroredHorizontalSlider(MirroredHorizontalSlider):
         dependant.setValue(mirrored_value)
 
         # what should be set
-        new_value = value if dependant is self.slider_right else mirrored_value
+        new_value = value if dependant is self.slider_left else mirrored_value
         # debounced signal
         self.debounce.handle(new_value)
         # instant signal
