@@ -5,6 +5,7 @@ from PyQt6.QtWidgets import QDial
 
 from app.common.signals import connect_handler_to_signal
 from app.widgets.debounced import Debounced
+from robohandcontrol.constants import SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
 
 
 class DebouncedDial(QDial):
@@ -14,8 +15,8 @@ class DebouncedDial(QDial):
         self,
         notches_visible: bool = True,
         wrapping: bool = False,
-        min_value: int = -90,
-        max_value: int = 90,
+        min_value: int = SERVO_MIN_ANGLE,
+        max_value: int = SERVO_MAX_ANGLE,
     ) -> None:
         super().__init__()
         self.setNotchesVisible(notches_visible)

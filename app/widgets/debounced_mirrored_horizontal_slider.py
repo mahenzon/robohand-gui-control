@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import QSlider
 
 from app.widgets.debounced import Debounced
 from app.widgets.mirrored_horizontal_slider import MirroredHorizontalSlider
+from robohandcontrol.constants import DEBOUNCE_TIME, SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
 
 
 class DebouncedMirroredHorizontalSlider(MirroredHorizontalSlider):
@@ -10,13 +11,13 @@ class DebouncedMirroredHorizontalSlider(MirroredHorizontalSlider):
 
     def __init__(
         self,
-        slider_minimum: int = -90,
-        slider_maximum: int = 90,
-        debounce_time: int = 100,
+        slider_minimum: int = SERVO_MIN_ANGLE,
+        slider_maximum: int = SERVO_MAX_ANGLE,
+        debounce_time: int = DEBOUNCE_TIME,
     ) -> None:
-        super().__init__(slider_minimum, slider_maximum)
         self.debounce_time = debounce_time
         self.debounce = Debounced(debounce_time=debounce_time)
+        super().__init__(slider_minimum, slider_maximum)
 
     def slider_value_changed(self, dependant: QSlider, value: int) -> None:
         # mirror slider

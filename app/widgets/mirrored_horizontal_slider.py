@@ -4,13 +4,14 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QHBoxLayout, QSlider, QWidget
 
 from app.common.signals import connect_handler_to_signal
+from robohandcontrol.constants import SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
 
 
 class MirroredHorizontalSlider(QWidget):
     def __init__(
         self,
-        slider_minimum: int = -90,
-        slider_maximum: int = 90,
+        slider_minimum: int = SERVO_MIN_ANGLE,
+        slider_maximum: int = SERVO_MAX_ANGLE,
     ) -> None:
         super().__init__()
 

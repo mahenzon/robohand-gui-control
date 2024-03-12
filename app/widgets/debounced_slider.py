@@ -5,6 +5,7 @@ from PyQt6.QtWidgets import QSlider
 
 from app.common.signals import connect_handler_to_signal
 from app.styles.slider import SLIDER_STYLESHEET_BIG_HANDLE
+from robohandcontrol.constants import DEBOUNCE_TIME, SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
 
 
 class DebouncedSlider(QSlider):
@@ -13,9 +14,9 @@ class DebouncedSlider(QSlider):
     def __init__(
         self,
         orientation: Qt.Orientation,
-        slider_minimum: int = -90,
-        slider_maximum: int = 90,
-        debounce_time: int = 100,
+        slider_minimum: int = SERVO_MIN_ANGLE,
+        slider_maximum: int = SERVO_MAX_ANGLE,
+        debounce_time: int = DEBOUNCE_TIME,
     ) -> None:
         """
         :param slider_minimum:
