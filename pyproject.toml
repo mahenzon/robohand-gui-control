@@ -14,7 +14,7 @@ ruff = "^0.3.2"
 mypy = "^1.9.0"
 
 [tool.poetry.group.risdk.dependencies]
-ri-sdk = "^1.0.0"
+ri-sdk = "^1.1.0"
 
 [tool.poetry.group.servokit.dependencies]
 gpiod = "^2.1.3"

@@ -559,13 +559,13 @@ files = [
 
 [[package]]
 name = "ri-sdk"
-version = "1.0.0"
+version = "1.1.0"
 description = "RI SDK Pythonic Wrapper"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.7"
 files = [
-    {file = "ri_sdk-1.0.0-py3-none-any.whl", hash = "sha256:64936362c0901c43332b0b58845217753ebe3ea1f8fab1cbcfeea017d03a69e1"},
-    {file = "ri_sdk-1.0.0.tar.gz", hash = "sha256:a94cd00446cba73c6bfeba8a8bbe46ad05664f11a55a4892dab8026ad85335eb"},
+    {file = "ri_sdk-1.1.0-py3-none-any.whl", hash = "sha256:a2edd17fb42a215594d5208f466e1697942b7b7cc52050acf9127a1ab5af0596"},
+    {file = "ri_sdk-1.1.0.tar.gz", hash = "sha256:3938d09952a37cb97f83a154a68b9fe6084d68b68c85ca15fb636ada36dc9555"},
 ]
 
 [[package]]
@@ -644,4 +644,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "5d38237cc5443cc94f8a0b74fcf064c44ebaf020458479f2ba71adbdf31accdc"
+content-hash = "8229d7b9b5e13b9fa92ac7a0b29d6cd4746223ea30c25c8e46cfc7042731cea9"
