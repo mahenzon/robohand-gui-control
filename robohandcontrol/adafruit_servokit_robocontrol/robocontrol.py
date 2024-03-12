@@ -23,9 +23,6 @@ from robohandcontrol.constants import (
 from robohandcontrol.robocontrol import RobohandControlBase
 
 if TYPE_CHECKING:
-    from adafruit_blinka.microcontroller.generic_linux.libgpiod.libgpiod_pin_2_x import (
-        Pin,
-    )
     from adafruit_pca9685 import PCA9685
 
 
@@ -40,10 +37,10 @@ def map_range(
 
 
 class RobohandAdafruitServoKitControl(RobohandControlBase):
-    def __init__(
+    def __init__(  # type: ignore
         self,
-        sda_pin: "Pin" = board.SDA,
-        scl_pin: "Pin" = board.SCL,
+        sda_pin=board.SDA,  # noqa: ANN001
+        scl_pin=board.SCL,  # noqa: ANN001
     ) -> None:
         i2c_bus = busio.I2C(sda_pin, scl_pin)
         self.kit = ServoKit(
