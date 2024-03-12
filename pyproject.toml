@@ -172,3 +172,18 @@ warn_redundant_casts = true
 warn_unused_ignores = true
 follow_imports_for_stubs = true
 namespace_packages = true
+
+exclude = [
+    "stuff",
+    "example.py",
+]
+
+[[tool.mypy.overrides]]
+module = [
+    "board",
+    "busio",
+    "adafruit_blinka",
+    "adafruit_servokit",
+    "adafruit_pca9685",
+]
+ignore_missing_imports = true
