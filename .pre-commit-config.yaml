@@ -33,3 +33,5 @@ repos:
     hooks:
       - id: mypy
         language: system
+        args:
+          - "--cache-fine-grained"
