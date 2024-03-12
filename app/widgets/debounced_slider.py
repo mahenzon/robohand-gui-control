@@ -7,7 +7,7 @@ from app.common.signals import connect_handler_to_signal
 from app.styles.slider import SLIDER_STYLESHEET_BIG_HANDLE
 
 
-class DebouncedSlider(QSlider):  # type: ignore[misc]
+class DebouncedSlider(QSlider):
     changed = pyqtSignal(int)
 
     def __init__(

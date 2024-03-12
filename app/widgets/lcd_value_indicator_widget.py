@@ -2,7 +2,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QLabel, QLCDNumber, QVBoxLayout, QWidget
 
 
-class LCDValueIndicatorWidget(QWidget):  # type: ignore[misc]
+class LCDValueIndicatorWidget(QWidget):
     def __init__(
         self,
         label_text: str,

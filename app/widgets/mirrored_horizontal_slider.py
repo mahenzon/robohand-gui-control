@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import QHBoxLayout, QSlider, QWidget
 from app.common.signals import connect_handler_to_signal
 
 
-class MirroredHorizontalSlider(QWidget):  # type: ignore[misc]
+class MirroredHorizontalSlider(QWidget):
     def __init__(
         self,
         slider_minimum: int = -90,

@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import QWidget
 from app.common.signals import connect_handler_to_signal
 
 
-class Debounced(QWidget):  # type: ignore[misc]
+class Debounced(QWidget):
     signal = pyqtSignal(int)
 
     def __init__(

@@ -7,7 +7,7 @@ from app.common.signals import connect_handler_to_signal
 from app.widgets.debounced import Debounced
 
 
-class DebouncedDial(QDial):  # type: ignore[misc]
+class DebouncedDial(QDial):
     changed = pyqtSignal(int)
 
     def __init__(

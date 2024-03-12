@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import QHBoxLayout, QWidget
 from app.widgets.lcd_value_indicator_widget import LCDValueIndicatorWidget
 
 
-class LcdIndicatorPanel(QWidget):  # type: ignore[misc]
+class LcdIndicatorPanel(QWidget):
     def __init__(self, labels: Iterable[str]) -> None:
         super().__init__()
 
