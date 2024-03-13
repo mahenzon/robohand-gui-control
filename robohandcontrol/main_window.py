@@ -1,7 +1,7 @@
 import logging
 import sys
 from enum import Enum
-from typing import TYPE_CHECKING, Callable
+from typing import Callable
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
@@ -18,14 +18,8 @@ from app.widgets.debounced_mirrored_horizontal_slider import (
 )
 from app.widgets.debounced_slider import DebouncedSlider
 from app.widgets.lcd_indicator_panel import LcdIndicatorPanel
-from robohandcontrol.dummy_robohand import LoggedRobohandControl
+from robohandcontrol.common import robohand_control
 from robohandcontrol.robocontrol import RobohandControlBase
-
-if TYPE_CHECKING:
-    from robohandcontrol.adafruit_servokit_robocontrol.robocontrol import (
-        RobohandAdafruitServoKitControl,
-    )
-    from robohandcontrol.ri_sdk_robocontrol.robocontrol import RobohandRISDKControl
 
 
 class DriveName(str, Enum):
@@ -130,39 +124,11 @@ class MainWindow(QWidget):
         return layout
 
 
-def get_robohand_for_ri_sdk() -> "RobohandRISDKControl":
-    from robohandcontrol.ri_sdk_robocontrol.robocontrol import get_ri_sdk_control
-
-    return get_ri_sdk_control()
-
-
-def get_robohand_for_adafruit_servokit() -> "RobohandAdafruitServoKitControl":
-    from robohandcontrol.adafruit_servokit_robocontrol.robocontrol import (
-        RobohandAdafruitServoKitControl,
-    )
-
-    return RobohandAdafruitServoKitControl()
-
-
 def main() -> None:
     logging.basicConfig(level=logging.DEBUG)
     app = QApplication(sys.argv)
 
-    robohand: RobohandControlBase
-    run_sdk_mode = "--ri-sdk-mode" in sys.argv
-    run_adafruit_servokit_mode = "--adafruit-servokit-mode" in sys.argv
-    if run_sdk_mode and run_adafruit_servokit_mode:
-        msg = (
-            "You cannot run both --ri-sdk-mode and --adafruit-servokit-mode. "
-            "Please choose either one"
-        )
-        raise ValueError(msg)
-    if run_sdk_mode:
-        robohand = get_robohand_for_ri_sdk()
-    elif run_adafruit_servokit_mode:
-        robohand = get_robohand_for_adafruit_servokit()
-    else:
-        robohand = LoggedRobohandControl()
+    robohand = robohand_control()
     window = MainWindow(robohand)
     window.show()
 
