@@ -1,12 +1,15 @@
 from __future__ import annotations
 
-from typing import Callable
+from typing import TYPE_CHECKING
 
-from PySide6.QtCore import Signal
+if TYPE_CHECKING:
+    from typing import Callable
+
+    from PySide6.QtCore import SignalInstance
 
 
 def connect_handler_to_signal(
-    signal: Signal,
+    signal: SignalInstance,
     handler: Callable[[], None] | Callable[[int], None],
 ) -> None:
     """
@@ -18,4 +21,4 @@ def connect_handler_to_signal(
     :param handler:
     :return:
     """
-    signal.connect(handler)  # type: ignore
+    signal.connect(handler)
