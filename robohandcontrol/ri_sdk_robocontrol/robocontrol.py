@@ -13,7 +13,7 @@ class RobohandRISDKControl(RobohandControlBase):
         self.speed = 50
 
     def set_servo_angle(self, servo: ServoInfo, angle: int) -> None:
-        self.robohand.turn_servo_with_relative_speed(
+        self.robohand.turn_servo(
             servo.descriptor,
             angle=angle,
             speed=self.speed,
