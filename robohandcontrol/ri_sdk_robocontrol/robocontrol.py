@@ -10,7 +10,7 @@ from robohandcontrol.robocontrol import RobohandControlBase
 class RobohandRISDKControl(RobohandControlBase):
     def __init__(self, robohand: RoboHand) -> None:
         self.robohand = robohand
-        self.speed = 50
+        self.speed = 100
 
     def set_servo_angle(self, servo: ServoInfo, angle: int) -> None:
         self.robohand.turn_servo(
