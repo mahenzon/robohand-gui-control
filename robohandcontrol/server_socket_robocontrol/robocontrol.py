@@ -66,7 +66,10 @@ class RobohandControlServerSocket(RobohandControlBase):
         if prefix not in self.methods:
             log.warning("Unknown command prefix %r, full: %r", prefix, command)
         method = self.methods[prefix]
-        method(*map(int, args))
+        try:
+            method(*map(int, args))
+        except Exception as e:
+            log.error("Error executing command %r: %s. Method: %s", command, e, method)
 
     def run_server(self) -> None:
         """
