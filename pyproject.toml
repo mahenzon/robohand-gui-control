@@ -16,7 +16,12 @@ mypy = "^1.9.0"
 [tool.poetry.group.risdk.dependencies]
 ri-sdk = "^1.1.0"
 
+[tool.poetry.group.server.dependencies]
+gpiod = "^2.1.3"
+adafruit-circuitpython-servokit = "^1.3.17"
+
 [tool.poetry.group.servokit.dependencies]
+ri-sdk = "^1.1.0"
 gpiod = "^2.1.3"
 adafruit-circuitpython-servokit = "^1.3.17"
 
