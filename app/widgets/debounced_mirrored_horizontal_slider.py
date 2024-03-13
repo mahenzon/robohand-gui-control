@@ -1,5 +1,5 @@
-from PyQt6.QtCore import pyqtSignal
-from PyQt6.QtWidgets import QSlider
+from PySide6.QtCore import Signal
+from PySide6.QtWidgets import QSlider
 
 from app.widgets.debounced import Debounced
 from app.widgets.mirrored_horizontal_slider import MirroredHorizontalSlider
@@ -7,7 +7,7 @@ from robohandcontrol.constants import DEBOUNCE_TIME, SERVO_MAX_ANGLE, SERVO_MIN_
 
 
 class DebouncedMirroredHorizontalSlider(MirroredHorizontalSlider):
-    value_changed = pyqtSignal(int)
+    value_changed = Signal(int)
 
     def __init__(
         self,

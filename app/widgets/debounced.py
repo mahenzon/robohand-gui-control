@@ -1,13 +1,13 @@
 from typing import Callable
 
-from PyQt6.QtCore import QTimer, pyqtSignal
-from PyQt6.QtWidgets import QWidget
+from PySide6.QtCore import QTimer, Signal
+from PySide6.QtWidgets import QWidget
 
 from app.common.signals import connect_handler_to_signal
 
 
 class Debounced(QWidget):
-    signal = pyqtSignal(int)
+    signal = Signal(int)
 
     def __init__(
         self,

@@ -1,4 +1,4 @@
-# RoboHand Control PyQt6 GUI
+# RoboHand Control PySide6 GUI
 
 ## Установка зависимостей
 

@@ -1,7 +1,7 @@
 from typing import Callable
 
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QHBoxLayout, QSlider, QWidget
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QHBoxLayout, QSlider, QWidget
 
 from app.common.signals import connect_handler_to_signal
 from robohandcontrol.constants import SERVO_MAX_ANGLE, SERVO_MIN_ANGLE

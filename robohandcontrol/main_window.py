@@ -3,8 +3,8 @@ import sys
 from enum import Enum
 from typing import TYPE_CHECKING, Callable
 
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import (
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import (
     QApplication,
     QHBoxLayout,
     QVBoxLayout,

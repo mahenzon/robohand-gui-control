@@ -1,15 +1,17 @@
 from typing import Callable
 
-from PyQt6.QtCore import pyqtSignal
-from PyQt6.QtWidgets import QDial
+from PySide6.QtCore import Signal
+# from PySide6.QtCore import pyqtSignal
+from PySide6.QtWidgets import QDial
 
 from app.common.signals import connect_handler_to_signal
 from app.widgets.debounced import Debounced
 from robohandcontrol.constants import SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
 
 
+
 class DebouncedDial(QDial):
-    changed = pyqtSignal(int)
+    changed = Signal(int)
 
     def __init__(
         self,

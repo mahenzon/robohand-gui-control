@@ -1,6 +1,6 @@
 from collections.abc import Iterable
 
-from PyQt6.QtWidgets import QHBoxLayout, QWidget
+from PySide6.QtWidgets import QHBoxLayout, QWidget
 
 from app.widgets.lcd_value_indicator_widget import LCDValueIndicatorWidget
 

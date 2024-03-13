@@ -1,12 +1,12 @@
-from typing import Callable, TypeVar, Union, cast
+from __future__ import annotations
 
-from PyQt6.QtCore import pyqtBoundSignal, pyqtSignal
+from typing import Callable
 
-SignalType = TypeVar("SignalType", bound=Union[pyqtSignal, pyqtBoundSignal])
+from PySide6.QtCore import Signal
 
 
 def connect_handler_to_signal(
-    signal: SignalType,
+    signal: Signal,
     handler: Callable[[], None] | Callable[[int], None],
 ) -> None:
     """
@@ -18,5 +18,4 @@ def connect_handler_to_signal(
     :param handler:
     :return:
     """
-    sig = cast(pyqtBoundSignal, signal)
-    sig.connect(handler)
+    signal.connect(handler)  # type: ignore

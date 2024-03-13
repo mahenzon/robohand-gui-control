@@ -1,7 +1,7 @@
 from typing import Callable
 
-from PyQt6.QtCore import Qt, QTimer, pyqtSignal
-from PyQt6.QtWidgets import QSlider
+from PySide6.QtCore import Qt, QTimer, Signal
+from PySide6.QtWidgets import QSlider
 
 from app.common.signals import connect_handler_to_signal
 from app.styles.slider import SLIDER_STYLESHEET_BIG_HANDLE
@@ -9,7 +9,7 @@ from robohandcontrol.constants import DEBOUNCE_TIME, SERVO_MAX_ANGLE, SERVO_MIN_
 
 
 class DebouncedSlider(QSlider):
-    changed = pyqtSignal(int)
+    changed = Signal(int)
 
     def __init__(
         self,
