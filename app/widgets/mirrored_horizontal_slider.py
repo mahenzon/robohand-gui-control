@@ -1,7 +1,7 @@
 from typing import Callable
 
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QHBoxLayout, QSlider, QWidget
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QHBoxLayout, QSlider, QWidget
 
 from app.common.signals import connect_handler_to_signal
 from robohandcontrol.constants import SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
@@ -29,8 +29,8 @@ class MirroredHorizontalSlider(QWidget):
 
         self.setLayout(h_layout)
 
-    def init_slider(self, handler: Callable[[int], None]) -> QSlider:
-        slider = QSlider(Qt.Orientation.Horizontal)
+    def init_slider(self, handler: "Callable[[int], None]") -> QSlider:
+        slider = QSlider(Qt.Orientation.Horizontal, self)
         slider.setMinimum(self.slider_minimum)
         slider.setMaximum(self.slider_maximum)
         slider.setTickPosition(QSlider.TickPosition.TicksBelow)
@@ -38,12 +38,15 @@ class MirroredHorizontalSlider(QWidget):
         return slider
 
     def left_slider_changed(self, value: int) -> None:
+        self.slider_left.blockSignals(True)
         self.slider_value_changed(self.slider_right, value)
+        self.slider_left.blockSignals(False)
 
     def right_slider_changed(self, value: int) -> None:
+        self.slider_right.blockSignals(True)
         self.slider_value_changed(self.slider_left, value)
+        self.slider_right.blockSignals(False)
 
     def slider_value_changed(self, dependant: QSlider, value: int) -> None:
-        # mirror slider
         mirrored_value = self.slider_maximum + self.slider_minimum - value
         dependant.setValue(mirrored_value)

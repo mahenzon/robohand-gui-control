@@ -1,7 +1,7 @@
 from typing import Callable
 
-from PyQt6.QtCore import pyqtSignal
-from PyQt6.QtWidgets import QDial
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtWidgets import QDial
 
 from app.common.signals import connect_handler_to_signal
 from app.widgets.debounced import Debounced
@@ -30,7 +30,7 @@ class DebouncedDial(QDial):
             self.debounce.handle,
         )
 
-    def add_debounced_handler(self, handler: Callable[[int], None]) -> None:
+    def add_debounced_handler(self, handler: "Callable[[int], None]") -> None:
         """
         Your callback handler
 

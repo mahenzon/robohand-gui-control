@@ -1,7 +1,7 @@
 from typing import Callable
 
-from PyQt6.QtCore import Qt, QTimer, pyqtSignal
-from PyQt6.QtWidgets import QSlider
+from PyQt5.QtCore import Qt, QTimer, pyqtSignal
+from PyQt5.QtWidgets import QSlider
 
 from app.common.signals import connect_handler_to_signal
 from app.styles.slider import SLIDER_STYLESHEET_BIG_HANDLE
@@ -44,7 +44,7 @@ class DebouncedSlider(QSlider):
         # Starts or restarts the timer with the timeout specified in interval.
         self.timer.start()
 
-    def add_debounced_handler(self, handler: Callable[[int], None]) -> None:
+    def add_debounced_handler(self, handler: "Callable[[int], None]") -> None:
         """
         Your callback handler
 

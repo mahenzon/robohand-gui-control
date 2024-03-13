@@ -1,5 +1,5 @@
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QLabel, QLCDNumber, QVBoxLayout, QWidget
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QLabel, QLCDNumber, QVBoxLayout, QWidget
 
 
 class LCDValueIndicatorWidget(QWidget):
@@ -12,7 +12,7 @@ class LCDValueIndicatorWidget(QWidget):
         super().__init__()
         layout = QVBoxLayout()
         label = QLabel(label_text)
-        label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+        label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)  # type: ignore
         label.setMaximumHeight(label_max_height)
         layout.addWidget(label)
         self.lcd = QLCDNumber()

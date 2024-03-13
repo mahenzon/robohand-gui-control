@@ -1,7 +1,7 @@
 from typing import Callable
 
-from PyQt6.QtCore import QTimer, pyqtSignal
-from PyQt6.QtWidgets import QWidget
+from PyQt5.QtCore import QTimer, pyqtSignal
+from PyQt5.QtWidgets import QWidget
 
 from app.common.signals import connect_handler_to_signal
 
@@ -34,7 +34,7 @@ class Debounced(QWidget):
         # Starts or restarts the timer with the timeout specified in interval.
         self.timer.start()
 
-    def add_debounced_handler(self, handler: Callable[[int], None]) -> None:
+    def add_debounced_handler(self, handler: "Callable[[int], None]") -> None:
         """
         Your callback handler
 

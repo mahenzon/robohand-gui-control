@@ -1,10 +1,10 @@
 import logging
 import sys
-from enum import StrEnum
+from enum import Enum
 from typing import TYPE_CHECKING, Callable
 
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import (
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import (
     QApplication,
     QHBoxLayout,
     QVBoxLayout,
@@ -28,7 +28,7 @@ if TYPE_CHECKING:
     from robohandcontrol.ri_sdk_robocontrol.robocontrol import RobohandRISDKControl
 
 
-class DriveName(StrEnum):
+class DriveName(str, Enum):
     ROTATE = "Rotate"
     RAISE = "Raise"
     EXTEND = "Extend"
@@ -64,7 +64,7 @@ class MainWindow(QWidget):
         self,
         orientation: Qt.Orientation,
         drive_name: DriveName,
-        handler: Callable[[int], None],
+        handler: "Callable[[int], None]",
     ) -> QVBoxLayout:
         layout = QVBoxLayout()
         debounced_slider = DebouncedSlider(orientation=orientation)
