@@ -1,6 +1,7 @@
+import os
 from enum import Enum
 
-SERVER_IP_CONNECT = "127.0.0.1"
+SERVER_IP_CONNECT = os.getenv("SERVER_IP_CONNECT", "127.0.0.1")
 SERVER_IP_BIND = "0.0.0.0"  # noqa: S104
 SERVER_PORT = 12345
 
