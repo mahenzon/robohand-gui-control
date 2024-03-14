@@ -3,7 +3,6 @@ from typing import Callable
 from PySide6.QtCore import Qt, QTimer, Signal
 from PySide6.QtWidgets import QSlider
 
-from app.common.signals import connect_handler_to_signal
 from app.styles.slider import SLIDER_STYLESHEET_BIG_HANDLE
 from robohandcontrol.constants import DEBOUNCE_TIME, SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
 
@@ -27,12 +26,13 @@ class DebouncedSlider(QSlider):
         self.timer = QTimer()
         self.timer.setInterval(debounce_time)
         self.timer.setSingleShot(True)
-        connect_handler_to_signal(self.timer.timeout, self.debounced_call)
+        # noinspection PyUnresolvedReferences
+        self.timer.timeout.connect(self.debounced_call)
         # slider
         self.setOrientation(orientation)
         self.setMinimum(slider_minimum)
         self.setMaximum(slider_maximum)
-        connect_handler_to_signal(self.valueChanged, self.slider_changed)
+        self.valueChanged.connect(self.slider_changed)
 
         self.setStyleSheet(SLIDER_STYLESHEET_BIG_HANDLE)
 
@@ -51,4 +51,4 @@ class DebouncedSlider(QSlider):
         :param handler:
         :return:
         """
-        connect_handler_to_signal(self.changed, handler)
+        self.changed.connect(handler)

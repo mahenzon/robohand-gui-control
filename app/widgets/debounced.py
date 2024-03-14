@@ -3,8 +3,6 @@ from typing import Callable
 from PySide6.QtCore import QTimer, Signal
 from PySide6.QtWidgets import QWidget
 
-from app.common.signals import connect_handler_to_signal
-
 
 class Debounced(QWidget):
     signal = Signal(int)
@@ -21,7 +19,8 @@ class Debounced(QWidget):
         self.timer = QTimer()
         self.timer.setInterval(debounce_time)
         self.timer.setSingleShot(True)
-        connect_handler_to_signal(self.timer.timeout, self.debounced_call)
+        # noinspection PyUnresolvedReferences
+        self.timer.timeout.connect(self.debounced_call)
         self.value = 0
 
     def debounced_call(self) -> None:
@@ -41,4 +40,4 @@ class Debounced(QWidget):
         :param handler:
         :return:
         """
-        connect_handler_to_signal(self.signal, handler)
+        self.signal.connect(handler)

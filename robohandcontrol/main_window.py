@@ -11,7 +11,6 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from app.common.signals import connect_handler_to_signal
 from app.widgets.debounced_dial import DebouncedDial
 from app.widgets.debounced_mirrored_horizontal_slider import (
     DebouncedMirroredHorizontalSlider,
@@ -46,8 +45,7 @@ class MainWindow(QWidget):
     def get_claw_control_layout(self) -> QVBoxLayout:
         layout = QVBoxLayout()
         claw_mirrored_slider = DebouncedMirroredHorizontalSlider()
-        connect_handler_to_signal(
-            claw_mirrored_slider.value_changed,
+        claw_mirrored_slider.value_changed.connect(
             self.indicators_panel.indicators[DriveName.CLAW].lcd.display,
         )
         claw_mirrored_slider.debounce.add_debounced_handler(self.robohand.control_claw)
@@ -63,8 +61,7 @@ class MainWindow(QWidget):
         layout = QVBoxLayout()
         debounced_slider = DebouncedSlider(orientation=orientation)
         layout.addWidget(debounced_slider)
-        connect_handler_to_signal(
-            debounced_slider.valueChanged,
+        debounced_slider.valueChanged.connect(
             self.indicators_panel.indicators[drive_name].lcd.display,
         )
         debounced_slider.add_debounced_handler(handler)
@@ -89,8 +86,7 @@ class MainWindow(QWidget):
 
         debounced_dial = DebouncedDial()
 
-        connect_handler_to_signal(
-            debounced_dial.valueChanged,
+        debounced_dial.valueChanged.connect(
             self.indicators_panel.indicators[DriveName.ROTATE].lcd.display,
         )
         debounced_dial.add_debounced_handler(self.robohand.control_rotation)

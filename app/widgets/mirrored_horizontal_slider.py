@@ -3,7 +3,6 @@ from typing import Callable
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QHBoxLayout, QSlider, QWidget
 
-from app.common.signals import connect_handler_to_signal
 from robohandcontrol.constants import SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
 
 
@@ -34,7 +33,7 @@ class MirroredHorizontalSlider(QWidget):
         slider.setMinimum(self.slider_minimum)
         slider.setMaximum(self.slider_maximum)
         slider.setTickPosition(QSlider.TickPosition.TicksBelow)
-        connect_handler_to_signal(slider.valueChanged, handler=handler)
+        slider.valueChanged.connect(handler)
         return slider
 
     def left_slider_changed(self, value: int) -> None:
