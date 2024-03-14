@@ -4,6 +4,7 @@ from typing import Optional
 
 from config import (
     COMMAND_SPLITTER,
+    CONNECT_TIMEOUT,
     SERVER_IP_CONNECT,
     SERVER_PORT,
     ControlParam,
@@ -54,10 +55,21 @@ class RobohandControlClientSocket(RobohandControlBase):
             return self._socket
         log.debug("Create a TCP socket")
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client_socket.settimeout(CONNECT_TIMEOUT)
 
         try:
             log.debug("Connect to the server")
             client_socket.connect((SERVER_IP_CONNECT, SERVER_PORT))
+        except socket.timeout:
+            log.error(
+                "Connection to %s:%s timed out after %s seconds",
+                SERVER_IP_CONNECT,
+                SERVER_PORT,
+                CONNECT_TIMEOUT,
+            )
+            return None
+        except OSError as e:
+            log.error("Could not connect to host, error: %s", e)
         except ConnectionRefusedError:
             log.error(
                 "Could not connect to server %s:%s",
@@ -74,6 +86,9 @@ class RobohandControlClientSocket(RobohandControlBase):
 
         try:
             self.socket.send(command.encode("utf-8"))
+        except TimeoutError:
+            log.error("Server socket connection timed out")
+            self._socket = None
         except BrokenPipeError:
             log.error(
                 "Connection refused on server %s:%s, skip sending command %r",
