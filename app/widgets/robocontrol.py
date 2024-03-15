@@ -1,8 +1,16 @@
-from typing import Callable
+import logging
+from typing import TYPE_CHECKING, Callable
 
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QHBoxLayout, QVBoxLayout, QWidget
+from PySide6.QtWidgets import (
+    QHBoxLayout,
+    QVBoxLayout,
+    QWidget,
+)
 
+import config
+from app.common.constants import DriveName
+from app.common.mappings import NAMES_TO_CONTROL_PARAMS
 from app.widgets.debounced_dial import DebouncedDial
 from app.widgets.debounced_mirrored_horizontal_slider import (
     DebouncedMirroredHorizontalSlider,
@@ -11,8 +19,11 @@ from app.widgets.debounced_slider import DebouncedSlider
 from app.widgets.lcd_indicator_panel import LcdIndicatorPanel
 from robohandcontrol.robocontrol import RobohandControlBase
 
+if TYPE_CHECKING:
+    from app.widgets.protocols import RGBValueSettable, ValueSettable
 
 
+log = logging.getLogger(__name__)
 
 
 class RoboControlWindow(QWidget):
@@ -20,23 +31,24 @@ class RoboControlWindow(QWidget):
         super().__init__()
         self.robohand: RobohandControlBase = robohand
 
+        self.command_components: "dict[str, ValueSettable | RGBValueSettable]" = {}
+
         self.indicators_panel = LcdIndicatorPanel(labels=list(DriveName))
-        self.the_main_vertical_layout = QVBoxLayout()
         self.control_layout = self.get_robot_control_vertical_layout()
+        self.the_main_vertical_layout = QVBoxLayout()
         self.the_main_vertical_layout.addLayout(self.control_layout)
 
         self.setLayout(self.the_main_vertical_layout)
-        self.setWindowTitle("RI RoboHand Control")
-        self.setGeometry(300, 200, 900, 500)
 
-    def get_claw_control_layout(self) -> QVBoxLayout:
-        layout = QVBoxLayout()
+    def get_claw_control_layout(self) -> QHBoxLayout:
+        layout = QHBoxLayout()
         claw_mirrored_slider = DebouncedMirroredHorizontalSlider()
         claw_mirrored_slider.value_changed.connect(
             self.indicators_panel.indicators[DriveName.CLAW].lcd.display,
         )
         claw_mirrored_slider.debounce.add_debounced_handler(self.robohand.control_claw)
         layout.addWidget(claw_mirrored_slider)
+        self.command_components[config.ControlParam.CLAW] = claw_mirrored_slider
         return layout
 
     def get_control_slider_layout(
@@ -52,6 +64,10 @@ class RoboControlWindow(QWidget):
             self.indicators_panel.indicators[drive_name].lcd.display,
         )
         debounced_slider.add_debounced_handler(handler)
+
+        control_key = NAMES_TO_CONTROL_PARAMS[drive_name]
+        self.command_components[control_key] = debounced_slider
+
         return layout
 
     def get_extend_control_layout(self) -> QVBoxLayout:
@@ -72,6 +88,7 @@ class RoboControlWindow(QWidget):
         layout = QVBoxLayout()
 
         debounced_dial = DebouncedDial()
+        self.command_components[config.ControlParam.ROTATION] = debounced_dial
 
         debounced_dial.valueChanged.connect(
             self.indicators_panel.indicators[DriveName.ROTATE].lcd.display,
@@ -105,3 +122,19 @@ class RoboControlWindow(QWidget):
         layout.addLayout(extend_control_layout)
         layout.addLayout(h_layout)
         return layout
+
+    def set_state_from_commands(self, commands_text: str) -> None:
+        commands = commands_text.split(config.COMMAND_ENDL)
+        for command in commands:
+            if not command:
+                continue
+            param, *values = command.split(config.COMMAND_SPLITTER)
+            if param not in self.command_components:
+                log.warning(
+                    "No control component found for key %s, available: %s",
+                    param,
+                    list(self.command_components),
+                )
+                continue
+            widget = self.command_components[param]
+            widget.set_value(*map(int, values))
