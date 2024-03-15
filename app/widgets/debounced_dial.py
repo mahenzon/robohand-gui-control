@@ -34,3 +34,6 @@ class DebouncedDial(QDial):
         :return:
         """
         self.debounce.signal.connect(handler)
+
+    def set_value(self, value: int) -> None:
+        self.setValue(value)

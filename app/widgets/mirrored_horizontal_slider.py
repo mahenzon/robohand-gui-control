@@ -46,3 +46,6 @@ class MirroredHorizontalSlider(QWidget):
         # mirror slider
         mirrored_value = self.slider_maximum + self.slider_minimum - value
         dependant.setValue(mirrored_value)
+
+    def set_value(self, value: int) -> None:
+        self.slider_right.setValue(value)

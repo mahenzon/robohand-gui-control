@@ -52,3 +52,6 @@ class DebouncedSlider(QSlider):
         :return:
         """
         self.changed.connect(handler)
+
+    def set_value(self, value: int) -> None:
+        self.setValue(value)
