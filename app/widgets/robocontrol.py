@@ -1,4 +1,3 @@
-from enum import Enum
 from typing import Callable
 
 from PySide6.QtCore import Qt
@@ -13,11 +12,7 @@ from app.widgets.lcd_indicator_panel import LcdIndicatorPanel
 from robohandcontrol.robocontrol import RobohandControlBase
 
 
-class DriveName(str, Enum):
-    ROTATE = "Rotate"
-    RAISE = "Raise"
-    EXTEND = "Extend"
-    CLAW = "Claw"
+
 
 
 class RoboControlWindow(QWidget):
