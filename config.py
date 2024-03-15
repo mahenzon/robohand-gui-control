@@ -7,6 +7,7 @@ SERVER_PORT = 61234
 CONNECT_TIMEOUT = 1
 
 COMMAND_SPLITTER = "|"
+COMMAND_ENDL = ";"
 
 
 class ControlParam(str, Enum):

@@ -4,6 +4,7 @@ from typing import Optional
 
 from config import (
     COMMAND_SPLITTER,
+    COMMAND_ENDL,
     CONNECT_TIMEOUT,
     SERVER_IP_CONNECT,
     SERVER_PORT,
@@ -99,5 +100,5 @@ class RobohandControlClientSocket(RobohandControlBase):
             self._socket = None
 
     def send_command(self, prefix: str, *args: int) -> None:
-        command = self.command_splitter.join((prefix, *map(str, args))) + ";"
+        command = self.command_splitter.join((prefix, *map(str, args))) + COMMAND_ENDL
         self.send_command_to_server(command)

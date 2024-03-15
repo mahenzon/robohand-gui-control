@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 from config import (
     COMMAND_SPLITTER,
+    COMMAND_ENDL,
     SERVER_IP_BIND,
     SERVER_PORT,
     ControlParam,
@@ -62,7 +63,7 @@ class RobohandControlServerSocket(RobohandControlBase):
         self.robohand.set_led_rgb(red, green, blue)
 
     def handle_command(self, command: str) -> None:
-        commands = command.split(";")
+        commands = command.split(COMMAND_ENDL)
         for cmd in commands:
             if not cmd:
                 continue
