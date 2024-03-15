@@ -99,5 +99,5 @@ class RobohandControlClientSocket(RobohandControlBase):
             self._socket = None
 
     def send_command(self, prefix: str, *args: int) -> None:
-        command = self.command_splitter.join((prefix, *map(str, args)))
+        command = self.command_splitter.join((prefix, *map(str, args))) + ";"
         self.send_command_to_server(command)

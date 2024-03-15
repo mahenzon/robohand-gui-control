@@ -62,14 +62,37 @@ class RobohandControlServerSocket(RobohandControlBase):
         self.robohand.set_led_rgb(red, green, blue)
 
     def handle_command(self, command: str) -> None:
-        prefix, *args = command.split(self.command_splitter)
-        if prefix not in self.methods:
-            log.warning("Unknown command prefix %r, full: %r", prefix, command)
-        method = self.methods[prefix]
-        try:
-            method(*map(int, args))
-        except Exception as e:
-            log.error("Error executing command %r: %s. Method: %s", command, e, method)
+        commands = command.split(";")
+        for cmd in commands:
+            if not cmd:
+                continue
+            prefix, *args = cmd.split(self.command_splitter)
+            if prefix not in self.methods:
+                log.warning(
+                    "Unknown command prefix %r, cmd %r, full: %r",
+                    prefix,
+                    cmd,
+                    command,
+                )
+            if prefix not in self.methods:
+                log.error(
+                    "Error processing command %r, no prefix %r, full command %r.",
+                    cmd,
+                    prefix,
+                    command,
+                )
+                continue
+            method = self.methods[prefix]
+            try:
+                method(*map(int, args))
+            except Exception as e:
+                log.error(
+                    "Error executing cmd %r command %r: %s. Method: %s",
+                    cmd,
+                    command,
+                    e,
+                    method,
+                )
 
     def run_server(self) -> None:
         """
