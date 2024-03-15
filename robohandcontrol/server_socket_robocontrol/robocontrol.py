@@ -4,8 +4,8 @@ import socket
 from typing import TYPE_CHECKING
 
 from config import (
-    COMMAND_SPLITTER,
     COMMAND_ENDL,
+    COMMAND_SPLITTER,
     SERVER_IP_BIND,
     SERVER_PORT,
     ControlParam,

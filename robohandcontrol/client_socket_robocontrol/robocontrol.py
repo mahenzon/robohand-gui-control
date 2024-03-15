@@ -3,8 +3,8 @@ import socket
 from typing import Optional
 
 from config import (
-    COMMAND_SPLITTER,
     COMMAND_ENDL,
+    COMMAND_SPLITTER,
     CONNECT_TIMEOUT,
     SERVER_IP_CONNECT,
     SERVER_PORT,
