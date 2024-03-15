@@ -11,7 +11,7 @@ class LcdIndicatorPanel(QWidget):
 
         horizontal_layout = QHBoxLayout()
 
-        indicators = {}
+        indicators: "dict[str, LCDValueIndicatorWidget]" = {}
         for label_text in labels:
             indicator = LCDValueIndicatorWidget(label_text)
             indicators[label_text] = indicator
