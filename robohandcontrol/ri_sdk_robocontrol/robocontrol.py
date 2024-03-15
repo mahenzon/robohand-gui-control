@@ -13,10 +13,9 @@ class RobohandRISDKControl(RobohandControlBase):
         self.speed = 100
 
     def set_servo_angle(self, servo: ServoInfo, angle: int) -> None:
-        self.robohand.turn_servo(
-            servo.descriptor,
+        self.robohand.set_servo_angle(
+            servo=servo,
             angle=angle,
-            speed=self.speed,
         )
 
     def control_claw(self, angle: int) -> None:
@@ -43,5 +42,9 @@ def get_ri_sdk_control() -> RobohandRISDKControl:
     lib = contrib.get_lib()
     robohand = RoboHand(lib)
     robohand.init_servos()
+
+    robohand.servos_to_mid_working_range()
+    robohand.show_servos_position()
+
     robohand.servos_to_start_position()
     return RobohandRISDKControl(robohand)

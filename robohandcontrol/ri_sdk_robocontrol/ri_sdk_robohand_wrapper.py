@@ -15,6 +15,7 @@ from robohandcontrol.constants import (
     SERVO_CLAW_PORT,
     SERVO_ROTATE_PORT,
 )
+from robohandcontrol.utils import map_range
 
 # Инициализируем глобальные переменные
 
@@ -33,6 +34,9 @@ ARROW_R_START_PULSE = 2000
 # стартовая позиция левой стрелы
 # (подъем: меньше - выше)
 ARROW_L_START_PULSE = 1000
+
+
+log = logging.getLogger(__name__)
 
 
 @dataclass
@@ -194,6 +198,53 @@ class RoboHand:
             pulse=servo.start_position_pulse,
         )
 
+    def show_servos_position(self) -> None:
+        log.warning("Show servos position")
+        for servo in self.servos:
+            res = self.ri_sdk.exec_servo_drive_get_current_angle(
+                descriptor=servo.descriptor,
+            )
+            log.warning(
+                "Servo %s w/ descriptor %s angle: %s",
+                servo.port,
+                servo.descriptor,
+                res.angle,
+            )
+
+    def servos_to_mid_working_range(self) -> None:
+        for servo in self.servos:
+            self.ri_sdk.exec_servo_drive_set_position_to_mid_working_range(
+                descriptor=servo.descriptor,
+            )
+
+    def rotate_servos_to_the_end(self, ccw: bool) -> None:
+        for servo in self.servos:
+            self.ri_sdk.exec_servo_drive_rotate_with_relative_speed(
+                descriptor=servo.descriptor,
+                direction=int(ccw),
+                speed=50,
+            )
+
+    def rotate_servos_one_step(self, ccw: bool) -> None:
+        for servo in self.servos:
+            self.ri_sdk.exec_servo_drive_min_step_rotate(
+                descriptor=servo.descriptor,
+                direction=int(ccw),
+                speed=50,
+            )
+
+    def rotate_servos_to_the_left(self) -> None:
+        self.rotate_servos_to_the_end(ccw=True)
+
+    def rotate_servos_to_the_right(self) -> None:
+        self.rotate_servos_to_the_end(ccw=False)
+
+    def rotate_servos_one_step_to_the_left(self) -> None:
+        self.rotate_servos_one_step(ccw=True)
+
+    def rotate_servos_one_step_to_the_right(self) -> None:
+        self.rotate_servos_one_step(ccw=False)
+
     def servos_to_start_position(self) -> None:
         """
         Проходим по известным сервам и устанавливаем в стартовую позицию
@@ -202,6 +253,32 @@ class RoboHand:
         """
         for servo in self.servos:
             self.start_position(servo)
+
+    def set_servo_angle(self, servo: ServoInfo, angle: int) -> None:
+        """
+        Для модели mg90s, у которой размер рабочего диапазона равен 2444 мкс,
+        максимальное значение импульса равно 2771 мкс,
+        при подключении к ШИМ модулятору pca9586,
+        у которого частота равна 50 Гц,
+        значение скважности должно попадать в промежуток
+        от 55 до 554 шагов включительно.
+
+        :param servo:
+        :param angle:
+        :return:
+        """
+        # от 55 до 554 шагов включительно.
+        steps = map_range(
+            angle,
+            in_min=-90,
+            in_max=90,
+            out_min=55,
+            out_max=554,
+        )
+        self.ri_sdk.exec_servo_drive_turn_by_duty_cycle(
+            descriptor=servo.descriptor,
+            steps=steps,
+        )
 
     def destruct_servos(self) -> None:
         """
@@ -275,25 +352,6 @@ class RoboHand:
             speed=speed,
         )
 
-    def turn_servo(
-        self,
-        servo_descriptor: int,
-        angle: int,
-        speed: int,
-    ) -> None:
-        """
-
-        :param servo_descriptor: дескриптор сервопривода
-        :param angle: угол
-        :param speed: Угловая скорость поворота (градус / секунда)
-        :return:
-        """
-        self.ri_sdk.exec_servo_drive_turn(
-            descriptor=servo_descriptor,
-            angle=angle,
-            speed=speed,
-        )
-
 
 def main() -> None:
     lib = contrib.get_lib()
@@ -314,8 +372,8 @@ def main() -> None:
     )
 
     # поднять башню на угол -40º со скоростью 50 г/с
-    robohand.turn_servo(
-        servo_descriptor=robohand.servo_raise.descriptor,
+    robohand.ri_sdk.exec_servo_drive_turn(
+        descriptor=robohand.servo_raise.descriptor,
         angle=-40,
         speed=50,
     )
