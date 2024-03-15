@@ -1,6 +1,6 @@
 import logging
 
-from robohandcontrol.common import robohand_control
+from app.common.robohand_getter import robohand_control
 from robohandcontrol.server_socket_robocontrol.robocontrol import (
     RobohandControlServerSocket,
 )

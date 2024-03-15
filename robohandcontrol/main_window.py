@@ -6,7 +6,7 @@ from PySide6.QtWidgets import (
 )
 
 from app.widgets.robocontrol import RoboControlWindow
-from robohandcontrol.common import robohand_control
+from app.common.robohand_getter import robohand_control
 
 
 def get_main_window() -> RoboControlWindow:
