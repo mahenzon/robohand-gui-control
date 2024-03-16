@@ -14,7 +14,7 @@ COMMAND_ENDL = ";"
 
 STORE_COMMANDS = "commands.json"
 
-COMMANDS_TIMEOUT = 500
+COMMANDS_TIMEOUT = 1000
 
 
 class ControlParam(str, Enum):
