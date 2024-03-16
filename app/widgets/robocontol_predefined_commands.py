@@ -47,9 +47,16 @@ class RoboControlPredefinedCommandsWidget(QWidget):
         )
         self.remove_button.clicked.connect(self.remove_selected_item)
 
+        self.run_commands_button = QPushButton()
+        self.run_commands_button.setIcon(
+            QIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_MediaPlay)),
+        )
+        self.run_commands_button.setMaximumWidth(42)
+
         buttons_layout = QHBoxLayout()
         buttons_layout.addWidget(self.add_button)
         buttons_layout.addWidget(self.remove_button)
+        buttons_layout.addWidget(self.run_commands_button)
 
         main_layout = QVBoxLayout()
         main_layout.addWidget(self.list_view)
