@@ -4,7 +4,7 @@ from PySide6.QtCore import Qt, QTimer, Signal
 from PySide6.QtWidgets import QSlider
 
 from app.styles.slider import SLIDER_STYLESHEET_BIG_HANDLE
-from robohandcontrol.constants import DEBOUNCE_TIME, SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
+from config import DEBOUNCE_TIME, SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
 
 
 class DebouncedSlider(QSlider):

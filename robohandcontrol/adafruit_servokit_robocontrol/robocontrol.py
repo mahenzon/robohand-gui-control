@@ -10,16 +10,7 @@ import board
 import busio
 from adafruit_servokit import ServoKit
 
-from robohandcontrol.constants import (
-    BLUE_LED_PORT,
-    DEFAULT_PWM_ADDRESS,
-    GREEN_LED_PORT,
-    RED_LED_PORT,
-    SERVO_ARROW_L_PORT,
-    SERVO_ARROW_R_PORT,
-    SERVO_CLAW_PORT,
-    SERVO_ROTATE_PORT,
-)
+from config import DEFAULT_PWM_ADDRESS, LEDPorts, ServoPorts
 from robohandcontrol.robocontrol import RobohandControlBase
 from robohandcontrol.utils import map_range
 
@@ -43,15 +34,15 @@ class RobohandAdafruitServoKitControl(RobohandControlBase):
         pca: PCA9685 = self.kit._pca
 
         # I have LED connected to the last three pins on the PCA9685 board
-        self.red_channel = pca.channels[RED_LED_PORT]
-        self.green_channel = pca.channels[GREEN_LED_PORT]
-        self.blue_channel = pca.channels[BLUE_LED_PORT]
+        self.red_channel = pca.channels[LEDPorts.RED_LED_PORT]
+        self.green_channel = pca.channels[LEDPorts.GREEN_LED_PORT]
+        self.blue_channel = pca.channels[LEDPorts.BLUE_LED_PORT]
         self.led_max_duty_cycle = 0xFFFF
 
-        self.servo_base = self.kit.servo[SERVO_ROTATE_PORT]
-        self.servo_claw = self.kit.servo[SERVO_CLAW_PORT]
-        self.servo_pull = self.kit.servo[SERVO_ARROW_R_PORT]
-        self.servo_raise = self.kit.servo[SERVO_ARROW_L_PORT]
+        self.servo_base = self.kit.servo[ServoPorts.SERVO_ROTATE_PORT]
+        self.servo_claw = self.kit.servo[ServoPorts.SERVO_CLAW_PORT]
+        self.servo_pull = self.kit.servo[ServoPorts.SERVO_ARROW_R_PORT]
+        self.servo_raise = self.kit.servo[ServoPorts.SERVO_ARROW_L_PORT]
 
     def control_claw(self, angle: int) -> None:
         self.servo_claw.angle = angle

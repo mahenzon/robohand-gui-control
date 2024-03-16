@@ -5,16 +5,7 @@ from dataclasses import dataclass
 from ri_sdk import RoboIntellectSDK, contrib
 from ri_sdk.exceptions import MethodCallError
 
-from robohandcontrol.constants import (
-    BLUE_LED_PORT,
-    DEFAULT_PWM_ADDRESS,
-    GREEN_LED_PORT,
-    RED_LED_PORT,
-    SERVO_ARROW_L_PORT,
-    SERVO_ARROW_R_PORT,
-    SERVO_CLAW_PORT,
-    SERVO_ROTATE_PORT,
-)
+from config import DEFAULT_PWM_ADDRESS, LEDPorts, ServoPorts
 from robohandcontrol.utils import map_range
 
 # Инициализируем глобальные переменные
@@ -55,22 +46,22 @@ class RoboHand:
         self.ri_sdk.init_sdk(log_level=1)
 
         self.servo_rotate = ServoInfo(
-            port=SERVO_ROTATE_PORT,
+            port=ServoPorts.SERVO_ROTATE_PORT,
             descriptor=0,
             start_position_pulse=BODY_START_PULSE,
         )
         self.servo_claw = ServoInfo(
-            port=SERVO_CLAW_PORT,
+            port=ServoPorts.SERVO_CLAW_PORT,
             descriptor=0,
             start_position_pulse=CLAW_START_PULSE,
         )
         self.servo_pull = ServoInfo(
-            port=SERVO_ARROW_R_PORT,
+            port=ServoPorts.SERVO_ARROW_R_PORT,
             descriptor=0,
             start_position_pulse=ARROW_R_START_PULSE,
         )
         self.servo_raise = ServoInfo(
-            port=SERVO_ARROW_L_PORT,
+            port=ServoPorts.SERVO_ARROW_L_PORT,
             descriptor=0,
             start_position_pulse=ARROW_L_START_PULSE,
         )
@@ -159,9 +150,9 @@ class RoboHand:
         self.ri_sdk.link_led_to_controller(
             descriptor=create_led_result.descriptor,
             pwm=self.pwm_descriptor,
-            rport=RED_LED_PORT,  # red
-            gport=GREEN_LED_PORT,  # green
-            bport=BLUE_LED_PORT,  # blue
+            rport=LEDPorts.RED_LED_PORT,  # red
+            gport=LEDPorts.GREEN_LED_PORT,  # green
+            bport=LEDPorts.BLUE_LED_PORT,  # blue
         )
         return create_led_result.descriptor
 

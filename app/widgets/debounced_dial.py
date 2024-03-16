@@ -4,7 +4,7 @@ from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QDial
 
 from app.widgets.debounced import Debounced
-from robohandcontrol.constants import SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
+from config import SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
 
 
 class DebouncedDial(QDial):

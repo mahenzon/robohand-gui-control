@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QSlider
 
 from app.widgets.debounced import Debounced
 from app.widgets.mirrored_horizontal_slider import MirroredHorizontalSlider
-from robohandcontrol.constants import DEBOUNCE_TIME, SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
+from config import DEBOUNCE_TIME, SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
 
 
 class DebouncedMirroredHorizontalSlider(MirroredHorizontalSlider):
