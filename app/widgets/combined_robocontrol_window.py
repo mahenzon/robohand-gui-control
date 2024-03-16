@@ -7,6 +7,7 @@ from PySide6.QtWidgets import QApplication, QHBoxLayout, QSplitter, QWidget
 import config
 from app.common.mappings import NAMES_TO_CONTROL_PARAMS
 from app.common.robohand_getter import robohand_control
+from app.widgets.delayed_commands_timer import DelayedCommandsTimer
 from app.widgets.robocontol_predefined_commands import (
     RoboControlPredefinedCommandsWidget,
 )
@@ -38,6 +39,12 @@ class CombinedRoboControlWindow(QWidget):
         self.setLayout(self.main_layout)
 
         self.register_actions()
+        self.commands_timer = DelayedCommandsTimer(
+            handler=self.robo_control.set_state_from_commands,
+        )
+        self.commands_timer.timer_finished.connect(
+            self.handle_run_commands_finished,
+        )
 
         self.setWindowTitle("RI RoboHand Control")
         self.setGeometry(400, 300, 1200, 600)
@@ -48,6 +55,9 @@ class CombinedRoboControlWindow(QWidget):
         )
         self.predefined_commands.list_view.doubleClicked.connect(
             self.handle_command_double_clicked,
+        )
+        self.predefined_commands.run_commands_button.clicked.connect(
+            self.handle_run_commands,
         )
 
     def get_current_state_as_commands_text(self) -> str:
@@ -69,6 +79,20 @@ class CombinedRoboControlWindow(QWidget):
         model = self.predefined_commands.string_list_model
         command_value = model.data(index, Qt.DisplayRole)  # type: ignore[attr-defined]
         self.robo_control.set_state_from_commands(command_value)
+
+    def handle_run_commands_finished(self):
+        self.commands_timer.reset()
+        self.predefined_commands.set_run_button_icon_play()
+
+    def handle_run_commands(self) -> None:
+        if self.commands_timer.timer.isActive():
+            self.commands_timer.timer.stop()
+            self.handle_run_commands_finished()
+        else:
+            commands = self.predefined_commands.string_list_model.stringList()
+            self.commands_timer.reset(commands=commands)
+            self.commands_timer.start()
+            self.predefined_commands.set_run_button_icon_stop()
 
 
 def main() -> None:
