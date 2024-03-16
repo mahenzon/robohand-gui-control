@@ -48,9 +48,7 @@ class RoboControlPredefinedCommandsWidget(QWidget):
         self.remove_button.clicked.connect(self.remove_selected_item)
 
         self.run_commands_button = QPushButton()
-        self.run_commands_button.setIcon(
-            QIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_MediaPlay)),
-        )
+        self.set_run_button_icon_play()
         self.run_commands_button.setMaximumWidth(42)
 
         buttons_layout = QHBoxLayout()
@@ -67,6 +65,20 @@ class RoboControlPredefinedCommandsWidget(QWidget):
         self.restore_from_json_data()
 
         self.setLayout(main_layout)
+
+    def set_run_button_icon(
+        self,
+        icon: QStyle.StandardPixmap = QStyle.StandardPixmap.SP_MediaPlay,
+    ):
+        self.run_commands_button.setIcon(
+            QIcon(self.style().standardIcon(icon)),
+        )
+
+    def set_run_button_icon_play(self):
+        self.set_run_button_icon(QStyle.StandardPixmap.SP_MediaPlay)
+
+    def set_run_button_icon_stop(self):
+        self.set_run_button_icon(QStyle.StandardPixmap.SP_MediaStop)
 
     def restore_from_json_data(self) -> None:
         if not self.filepath:
