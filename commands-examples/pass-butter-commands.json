@@ -1,0 +1,14 @@
+{
+  "commands": [
+    "rotation|0;raise_arrow|-54;extend_arrow|22;claw|69;",
+    "rotation|-82;raise_arrow|-54;",
+    "raise_arrow|-54;extend_arrow|-75;",
+    "raise_arrow|-20;claw|-85;",
+    "raise_arrow|-82;",
+    "extend_arrow|10;",
+    "rotation|82;extend_arrow|10;",
+    "extend_arrow|-54;raise_arrow|0;claw|60;",
+    "raise_arrow|-69;extend_arrow|25;",
+    "rotation|0;claw|69;"
+  ]
+}
