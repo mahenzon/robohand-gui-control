@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from ri_sdk import RoboIntellectSDK, contrib
 from ri_sdk.exceptions import MethodCallError
 
+import config
 from config import DEFAULT_PWM_ADDRESS, LEDPorts, ServoPorts
 from robohandcontrol.utils import map_range
 
@@ -261,10 +262,10 @@ class RoboHand:
         # от 55 до 554 шагов включительно.
         steps = map_range(
             angle,
-            in_min=-90,
-            in_max=90,
-            out_min=55,
-            out_max=554,
+            in_min=config.SERVO_MIN_ANGLE,
+            in_max=config.SERVO_MAX_ANGLE,
+            out_min=60,
+            out_max=550,
         )
         self.ri_sdk.exec_servo_drive_turn_by_duty_cycle(
             descriptor=servo.descriptor,
