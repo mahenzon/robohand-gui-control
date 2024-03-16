@@ -1,5 +1,6 @@
 import json
 import sys
+from typing import TYPE_CHECKING
 
 from PySide6.QtCore import QStringListModel
 from PySide6.QtGui import QIcon
@@ -15,6 +16,11 @@ from PySide6.QtWidgets import (
 
 from config import BASE_DIR
 
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    fp_type = Path | None
+
 
 class RoboControlPredefinedCommandsWidget(QWidget):
     def __init__(
@@ -22,7 +28,7 @@ class RoboControlPredefinedCommandsWidget(QWidget):
         filename: "str | None" = None,
     ) -> None:
         super().__init__()
-        self.filepath: "Path | None" = None
+        self.filepath: "fp_type" = None
         if filename:
             self.filepath = BASE_DIR / filename
 
@@ -119,8 +125,9 @@ class RoboControlPredefinedCommandsWidget(QWidget):
                 item_list[index] = val
                 index += 1
         skip_indexes = len(item_list) - len(skip_idx)
-        self.string_list_model.setStringList(item_list[:skip_indexes])
-        self.save_json_data(item_list)
+        new_items = item_list[:skip_indexes]
+        self.string_list_model.setStringList(new_items)
+        self.save_json_data(new_items)
 
 
 if __name__ == "__main__":

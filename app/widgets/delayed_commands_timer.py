@@ -23,7 +23,7 @@ class DelayedCommandsTimer(QWidget):
         self.handler = handler
         self.index = 0
         self.timer = QTimer()
-        self.commands = []
+        self.commands: "list[str]" = []
         self.timer_finished.connect(self.reset)
         # noinspection PyUnresolvedReferences
         self.timer.timeout.connect(self.send_command)
