@@ -124,6 +124,7 @@ class RoboControlWindow(QWidget):
         return layout
 
     def set_state_from_commands(self, commands_text: str) -> None:
+        log.info("Run set state from command: %r", commands_text)
         commands = commands_text.split(config.COMMAND_ENDL)
         for command in commands:
             if not command:
