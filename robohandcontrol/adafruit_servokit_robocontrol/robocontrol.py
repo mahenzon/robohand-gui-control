@@ -10,11 +10,13 @@ import board
 import busio
 from adafruit_servokit import ServoKit
 
+import config
 from config import DEFAULT_PWM_ADDRESS, LEDPorts, ServoPorts
 from robohandcontrol.robocontrol import RobohandControlBase
 from robohandcontrol.utils import map_range
 
 if TYPE_CHECKING:
+    from adafruit_motor.servo import Servo  # type: ignore[import-untyped]
     from adafruit_pca9685 import PCA9685
 
 
@@ -44,17 +46,29 @@ class RobohandAdafruitServoKitControl(RobohandControlBase):
         self.servo_pull = self.kit.servo[ServoPorts.SERVO_ARROW_R_PORT]
         self.servo_raise = self.kit.servo[ServoPorts.SERVO_ARROW_L_PORT]
 
+        self.out_min = config.SERVO_MAX_ANGLE + config.SERVO_MIN_ANGLE
+        self.out_max = config.SERVO_MAX_ANGLE - config.SERVO_MIN_ANGLE
+
+    def set_servo_angle(self, servo: "Servo", angle: int) -> None:
+        servo.angle = map_range(
+            angle,
+            in_min=config.SERVO_MIN_ANGLE,
+            in_max=config.SERVO_MAX_ANGLE,
+            out_min=self.out_min,
+            out_max=self.out_max,
+        )
+
     def control_claw(self, angle: int) -> None:
-        self.servo_claw.angle = angle
+        self.set_servo_angle(self.servo_claw, angle)
 
     def control_extend_arrow(self, angle: int) -> None:
-        self.servo_pull.angle = angle
+        self.set_servo_angle(self.servo_pull, angle)
 
     def control_raise_arrow(self, angle: int) -> None:
-        self.servo_raise.angle = angle
+        self.set_servo_angle(self.servo_raise, angle)
 
     def control_rotation(self, angle: int) -> None:
-        self.servo_base.angle = angle
+        self.set_servo_angle(self.servo_base, angle)
 
     def map_color_value(self, value: int) -> int:
         return map_range(
