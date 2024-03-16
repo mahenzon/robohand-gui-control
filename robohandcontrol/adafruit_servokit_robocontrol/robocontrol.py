@@ -24,7 +24,7 @@ class RobohandAdafruitServoKitControl(RobohandControlBase):
         sda_pin=board.SDA,  # noqa: ANN001
         scl_pin=board.SCL,  # noqa: ANN001
     ) -> None:
-        i2c_bus = busio.I2C(sda_pin, scl_pin)
+        i2c_bus = busio.I2C(scl=scl_pin, sda=sda_pin)
         self.kit = ServoKit(
             channels=16,
             i2c=i2c_bus,
