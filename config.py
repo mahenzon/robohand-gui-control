@@ -14,6 +14,8 @@ COMMAND_ENDL = ";"
 
 STORE_COMMANDS = "commands.json"
 
+COMMANDS_TIMEOUT = 500
+
 
 class ControlParam(str, Enum):
     CLAW = "claw"
