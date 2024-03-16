@@ -12,6 +12,7 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
+
 from config import BASE_DIR
 
 
@@ -69,15 +70,15 @@ class RoboControlPredefinedCommandsWidget(QWidget):
     def set_run_button_icon(
         self,
         icon: QStyle.StandardPixmap = QStyle.StandardPixmap.SP_MediaPlay,
-    ):
+    ) -> None:
         self.run_commands_button.setIcon(
             QIcon(self.style().standardIcon(icon)),
         )
 
-    def set_run_button_icon_play(self):
+    def set_run_button_icon_play(self) -> None:
         self.set_run_button_icon(QStyle.StandardPixmap.SP_MediaPlay)
 
-    def set_run_button_icon_stop(self):
+    def set_run_button_icon_stop(self) -> None:
         self.set_run_button_icon(QStyle.StandardPixmap.SP_MediaStop)
 
     def restore_from_json_data(self) -> None:

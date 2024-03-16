@@ -3,7 +3,7 @@ from typing import Callable
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QHBoxLayout, QSlider, QWidget
 
-from robohandcontrol.constants import SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
+from config import SERVO_MAX_ANGLE, SERVO_MIN_ANGLE
 
 
 class MirroredHorizontalSlider(QWidget):

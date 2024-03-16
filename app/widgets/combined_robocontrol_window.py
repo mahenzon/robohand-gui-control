@@ -80,7 +80,7 @@ class CombinedRoboControlWindow(QWidget):
         command_value = model.data(index, Qt.DisplayRole)  # type: ignore[attr-defined]
         self.robo_control.set_state_from_commands(command_value)
 
-    def handle_run_commands_finished(self):
+    def handle_run_commands_finished(self) -> None:
         self.commands_timer.reset()
         self.predefined_commands.set_run_button_icon_play()
 
