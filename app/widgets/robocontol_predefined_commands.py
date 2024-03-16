@@ -1,3 +1,4 @@
+import json
 import sys
 
 from PySide6.QtCore import QStringListModel
@@ -11,11 +12,18 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
+from config import BASE_DIR
 
 
 class RoboControlPredefinedCommandsWidget(QWidget):
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        filename: "str | None" = None,
+    ) -> None:
         super().__init__()
+        self.filepath: "Path | None" = None
+        if filename:
+            self.filepath = BASE_DIR / filename
 
         self.setWindowTitle("String List Model Example")
 
@@ -46,12 +54,39 @@ class RoboControlPredefinedCommandsWidget(QWidget):
         main_layout = QVBoxLayout()
         main_layout.addWidget(self.list_view)
         main_layout.addLayout(buttons_layout)
+
+        self.commands_json_key = "commands"
+
+        self.restore_from_json_data()
+
         self.setLayout(main_layout)
+
+    def restore_from_json_data(self) -> None:
+        if not self.filepath:
+            return
+
+        with self.filepath.open("r") as file:
+            data = json.load(file)
+
+        if self.commands_json_key not in data:
+            return
+
+        commands = data[self.commands_json_key]
+        self.string_list_model.setStringList(commands)
+
+    def save_json_data(self, commands: "list[str]") -> None:
+        if not self.filepath:
+            return
+
+        with self.filepath.open("w") as file:
+            data = {self.commands_json_key: commands}
+            json.dump(data, file, indent=2)
 
     def add_element(self, text: str) -> None:
         item_list = self.string_list_model.stringList()
         item_list.append(text)
         self.string_list_model.setStringList(item_list)
+        self.save_json_data(item_list)
 
     def remove_selected_item(self) -> None:
         selected_indexes = self.list_view.selectedIndexes()
@@ -65,6 +100,7 @@ class RoboControlPredefinedCommandsWidget(QWidget):
                 index += 1
         skip_indexes = len(item_list) - len(skip_idx)
         self.string_list_model.setStringList(item_list[:skip_indexes])
+        self.save_json_data(item_list)
 
 
 if __name__ == "__main__":

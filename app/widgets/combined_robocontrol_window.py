@@ -15,12 +15,18 @@ from robohandcontrol.robocontrol import RobohandControlBase
 
 
 class CombinedRoboControlWindow(QWidget):
-    def __init__(self, robohand: RobohandControlBase) -> None:
+    def __init__(
+        self,
+        robohand: RobohandControlBase,
+        store_commands_filename: "str | None" = None,
+    ) -> None:
         super().__init__()
 
         self.robo_control = RoboControlWindow(robohand)
 
-        self.predefined_commands = RoboControlPredefinedCommandsWidget()
+        self.predefined_commands = RoboControlPredefinedCommandsWidget(
+            filename=store_commands_filename,
+        )
         self.splitter = QSplitter(self)
 
         self.splitter.addWidget(self.robo_control)

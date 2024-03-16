@@ -1,5 +1,8 @@
 import os
 from enum import Enum
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
 
 SERVER_IP_CONNECT = os.getenv("SERVER_IP_CONNECT", "127.0.0.1")
 SERVER_IP_BIND = "0.0.0.0"  # noqa: S104
@@ -8,6 +11,8 @@ CONNECT_TIMEOUT = 1
 
 COMMAND_SPLITTER = "|"
 COMMAND_ENDL = ";"
+
+STORE_COMMANDS = "commands.json"
 
 
 class ControlParam(str, Enum):

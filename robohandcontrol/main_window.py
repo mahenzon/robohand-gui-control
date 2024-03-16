@@ -5,13 +5,17 @@ from PySide6.QtWidgets import (
     QApplication,
 )
 
+import config
 from app.common.robohand_getter import robohand_control
 from app.widgets.combined_robocontrol_window import CombinedRoboControlWindow
 
 
 def get_main_window() -> CombinedRoboControlWindow:
     robohand = robohand_control()
-    window = CombinedRoboControlWindow(robohand)
+    window = CombinedRoboControlWindow(
+        robohand,
+        store_commands_filename=config.STORE_COMMANDS,
+    )
     return window
 
 
